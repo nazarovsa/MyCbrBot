@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureAppConfiguration((ctx, configurationBuilder) =>
 {
-    configurationBuilder.AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", false, true);
+    configurationBuilder.AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName.ToLowerInvariant()}.json", false, true);
     configurationBuilder.AddJsonFile("appsettings.protected.json", false, true);
     configurationBuilder.AddEnvironmentVariables();
 });
