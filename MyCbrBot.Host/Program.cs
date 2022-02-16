@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureAppConfiguration((ctx, configurationBuilder) =>
 {
     configurationBuilder.AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName.ToLowerInvariant()}.json", false, true);
-    configurationBuilder.AddJsonFile("appsettings.protected.json", false, true);
+    configurationBuilder.AddJsonFile("appsettings.protected.json", true, true);
     configurationBuilder.AddEnvironmentVariables();
 });
 
@@ -28,8 +28,8 @@ builder.Host.UseSerilog((ctx, logBuilder) =>
 
 // Add services to the container.
 builder.Services.AddControllers();
-
 builder.Services.AddHttpClient();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddMvc()
     .AddUpdateController()
@@ -56,6 +56,7 @@ builder.Services.AddHostedService(c =>
 var app = builder.Build();
 
 app.UseRouting();
+app.UseHealthChecks("healthcheck");
 
 app.UseEndpoints(endpoints =>
 {
