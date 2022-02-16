@@ -22,7 +22,8 @@ builder.Host.ConfigureAppConfiguration((ctx, configurationBuilder) =>
 
 builder.Host.UseSerilog((ctx, logBuilder) =>
 {
-    logBuilder.ReadFrom.Configuration(ctx.Configuration);
+    logBuilder.ReadFrom.Configuration(ctx.Configuration)
+        .Enrich.FromLogContext();
 });
 
 // Add services to the container.

@@ -18,4 +18,8 @@
       <ProjectReference Include="..\MyCbrBot.Domain\MyCbrBot.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Resources\messages.ru-ru.json" />
+    </ItemGroup>
+
 </Project>
