@@ -56,7 +56,7 @@ builder.Services.AddHostedService(c =>
 var app = builder.Build();
 
 app.UseRouting();
-app.UseHealthChecks("healthcheck");
+app.UseHealthChecks("/healthcheck");
 
 app.UseEndpoints(endpoints =>
 {

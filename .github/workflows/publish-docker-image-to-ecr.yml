@@ -40,7 +40,7 @@ jobs:
           # push it to ECR so that it can
           # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} . --file MyCbrBot.Host/Dockerfile
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} 
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}"
+          # docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} 
+          # echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}"
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
