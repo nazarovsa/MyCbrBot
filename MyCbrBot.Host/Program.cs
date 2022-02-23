@@ -6,6 +6,8 @@ using Insight.TelegramBot.Web;
 using Insight.TelegramBot.Web.Hosts;
 using Microsoft.Extensions.Options;
 using MyCbrBot.Core.Dates;
+
+using MyCbrBot.Domain.Services;
 using MyCbrBot.Domain.TelegramBot;
 using Newtonsoft.Json.Serialization;
 using Serilog;
@@ -39,6 +41,7 @@ builder.Services.AddMvc()
 builder.Services.AddSingleton<IDateTimeProvider, DefaultDateTimeProvider>();
 
 builder.Services.AddTransient(ctx => new DailyInfoSoapClient(DailyInfoSoapClient.EndpointConfiguration.DailyInfoSoap));
+builder.Services.AddTransient<ICachingCurrencyService, CachingCurrencyService>();
 builder.Services.AddTransient<ICurrencyService, CurrencyService>();
 
 builder.Services.Configure<BotConfiguration>(builder.Configuration.GetSection(nameof(BotConfiguration)));
@@ -52,6 +55,8 @@ builder.Services.AddTransient<ITelegramBotClient, TelegramBotClient>(c =>
 builder.Services.AddHostedService(c =>
     new TelegramBotWebHookHost(c.GetService<ITelegramBotClient>(),
         c.GetService<IOptions<BotConfiguration>>()?.Value));
+
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

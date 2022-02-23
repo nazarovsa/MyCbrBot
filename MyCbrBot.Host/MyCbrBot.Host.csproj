@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="Insight.TelegramBot.Web" Version="$(InsightTelegramBotVersion)" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     </ItemGroup>
 

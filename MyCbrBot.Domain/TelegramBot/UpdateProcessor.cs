@@ -1,10 +1,10 @@
 using System.Globalization;
 using System.Text;
-using Insight.Cbr;
 using Insight.TelegramBot;
 using Insight.TelegramBot.Models;
 using Microsoft.Extensions.Logging;
 using MyCbrBot.Core.Dates;
+using MyCbrBot.Domain.Services;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -14,12 +14,12 @@ public sealed class UpdateProcessor : IUpdateProcessor
 {
     // TODO: Add logs!
     private readonly ILogger<UpdateProcessor> _logger;
-    private readonly ICurrencyService _currencyService;
+    private readonly ICachingCurrencyService _currencyService;
     private readonly IBot _bot;
     private readonly IDateTimeProvider _dateTimeProvider;
 
     public UpdateProcessor(ILogger<UpdateProcessor> logger,
-        ICurrencyService currencyService,
+        ICachingCurrencyService currencyService,
         IBot bot,
         IDateTimeProvider dateTimeProvider)
     {
