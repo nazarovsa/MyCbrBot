@@ -22,9 +22,11 @@ public sealed class CachingCurrencyService : ICachingCurrencyService
 
         var rates = await _currencyService.GetCurrencyRatesToDate(date, cancellationToken);
         if (rates != null)
+        {
             // TODO : Add to config.
             _memoryCache.Set(cacheKey, rates.ToArray(), TimeSpan.FromDays(3));
-
+        }
+            
         return rates;
     }
 

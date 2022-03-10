@@ -17,7 +17,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{52FEEF8A-A029-44FF-BC4A-5C3839804C96}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-		.github\workflows\publish-docker-image-to-ecs.yml = .github\workflows\publish-docker-image-to-ecs.yml
+		.github\workflows\docker-publish-to-github-registry.yml = .github\workflows\docker-publish-to-github-registry.yml
 	EndProjectSection
 EndProject
 Global

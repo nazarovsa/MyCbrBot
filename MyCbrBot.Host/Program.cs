@@ -6,7 +6,6 @@ using Insight.TelegramBot.Web;
 using Insight.TelegramBot.Web.Hosts;
 using Microsoft.Extensions.Options;
 using MyCbrBot.Core.Dates;
-
 using MyCbrBot.Domain.Services;
 using MyCbrBot.Domain.TelegramBot;
 using Newtonsoft.Json.Serialization;
