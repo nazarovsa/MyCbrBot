@@ -26,3 +26,8 @@ docker run --name mycbrbot \
         -e BotConfiguration__Token=$(MyCbrBotToken) \
         mycbrbot:latest
 ```
+
+Where:
+- WebHookBaseUrl - base url of webhook, e.g. https://mycoolestbot.com
+- PathForUpdateController - path for receive updates from telegram.
+- MyCbrBotToken - token of telegram bot.
