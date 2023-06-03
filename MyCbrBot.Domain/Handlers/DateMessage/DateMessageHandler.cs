@@ -17,12 +17,11 @@ public sealed class DateMessageHandler : IMatchingUpdateHandler<DateMessageMatch
     private readonly IDateTimeProvider _dateTimeProvider;
 
     public DateMessageHandler(IBot bot,
-        ICachingCurrencyService cachingCurrencyService,
+        ICachingCurrencyService currencyService,
         IDateTimeProvider dateTimeProvider)
     {
         _bot = bot ?? throw new ArgumentNullException(nameof(bot));
-        _currencyService =
-            cachingCurrencyService ?? throw new ArgumentNullException(nameof(cachingCurrencyService));
+        _currencyService = currencyService ?? throw new ArgumentNullException(nameof(currencyService));
         _dateTimeProvider = dateTimeProvider ?? throw new ArgumentNullException(nameof(dateTimeProvider));
     }
 
@@ -114,7 +113,8 @@ public sealed class DateMessageHandler : IMatchingUpdateHandler<DateMessageMatch
         {
             await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
             {
-                Text = "Введенная команда не соответствует одному из шаблонов 😔: '/date дата' или '/date дата код_валюты'.",
+                Text =
+                    "Введенная команда не соответствует одному из шаблонов 😔: '/date дата' или '/date дата код_валюты'.",
                 ParseMode = ParseMode.Html
             }, cancellationToken);
         }

@@ -1,8 +1,6 @@
 using Insight.TelegramBot;
 using Insight.TelegramBot.Handling.Handlers;
 using Insight.TelegramBot.Models;
-using MyCbrBot.Core.Dates;
-using MyCbrBot.Domain.Services;
 using Telegram.Bot.Types;
 
 namespace MyCbrBot.Domain.Handlers.StartMessage;

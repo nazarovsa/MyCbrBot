@@ -3,14 +3,11 @@ using Insight.Cbr;
 using Insight.TelegramBot;
 using Insight.TelegramBot.Configurations;
 using Insight.TelegramBot.Handling.Infrastructure;
-using Insight.TelegramBot.UpdateProcessors;
 using Insight.TelegramBot.Web;
-using Insight.TelegramBot.Web.Hosts;
 using Microsoft.Extensions.Options;
 using MyCbrBot.Core.Dates;
 using MyCbrBot.Domain.Services;
 using MyCbrBot.Domain.TelegramBot;
-using Newtonsoft.Json.Serialization;
 using Serilog;
 using Telegram.Bot;
 
