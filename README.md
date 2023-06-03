@@ -21,11 +21,9 @@ Bot uses polling.
 ```
 docker run --name mycbrbot \
         -d --restart unless-stopped \
-        -e BotConfiguration__WebHookConfiguration__UseWebHook=false \
         -e BotConfiguration__Token=$(MyCbrBotToken) \
         mycbrbot:latest
 ```
 
 Where:
-- PathForUpdateController - path for receive updates from telegram.
 - MyCbrBotToken - token of telegram bot.
