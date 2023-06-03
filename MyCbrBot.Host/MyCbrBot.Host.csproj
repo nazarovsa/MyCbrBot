@@ -1,26 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Insight.TelegramBot.Web" Version="$(InsightTelegramBotVersion)" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.2" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
-        <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+        <PackageReference Include="Insight.TelegramBot.Web"/>
+        <PackageReference Include="Insight.TelegramBot.Handling"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory"/>
+        <PackageReference Include="Serilog"/>
+        <PackageReference Include="Serilog.AspNetCore"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MyCbrBot.Core\MyCbrBot.Core.csproj" />
-      <ProjectReference Include="..\MyCbrBot.Domain\MyCbrBot.Domain.csproj" />
+        <ProjectReference Include="..\MyCbrBot.Core\MyCbrBot.Core.csproj"/>
+        <ProjectReference Include="..\MyCbrBot.Domain\MyCbrBot.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Resources\messages.ru-ru.json" />
+        <_ContentIncludedByDefault Remove="Resources\messages.ru-ru.json"/>
     </ItemGroup>
 
 </Project>

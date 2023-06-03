@@ -1,15 +1,13 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["MyCbrBot.Host/MyCbrBot.Host.csproj", "MyCbrBot.Host/"]
-COPY ["MyCbrBot.Domain/MyCbrBot.Domain.csproj", "MyCbrBot.Domain/"]
-COPY ["MyCbrBot.Core/MyCbrBot.Core.csproj", "MyCbrBot.Core/"]
-RUN dotnet restore "MyCbrBot.Host/MyCbrBot.Host.csproj"
 COPY . .
+
+RUN dotnet restore "MyCbrBot.Host/MyCbrBot.Host.csproj"
 WORKDIR "/src/MyCbrBot.Host"
 RUN dotnet build "MyCbrBot.Host.csproj" -c Release -o /app/build
 

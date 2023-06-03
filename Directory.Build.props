@@ -1,5 +1,5 @@
 <Project>
     <PropertyGroup>
-        <InsightTelegramBotVersion>0.5.0</InsightTelegramBotVersion>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
 </Project>
