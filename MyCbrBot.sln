@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		README.md = README.md
 		TODO.md = TODO.md
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCbrBot.Core", "MyCbrBot.Core\MyCbrBot.Core.csproj", "{3B4A62CF-D5E1-4CF9-9EE4-D6070C06B9CF}"

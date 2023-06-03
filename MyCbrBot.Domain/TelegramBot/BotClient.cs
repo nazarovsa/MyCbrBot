@@ -2,7 +2,6 @@ using Insight.TelegramBot;
 using Insight.TelegramBot.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
-using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 
 namespace MyCbrBot.Domain.TelegramBot;
@@ -23,7 +22,7 @@ public sealed class BotClient : Bot
         {
             return base.SendMessageAsync(message, cancellationToken);
         }
-        catch (ChatNotInitiatedException ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "Bot can't initiate conversation with a user: {message}", message);
         }

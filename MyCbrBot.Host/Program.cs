@@ -2,6 +2,8 @@ using Generated;
 using Insight.Cbr;
 using Insight.TelegramBot;
 using Insight.TelegramBot.Configurations;
+using Insight.TelegramBot.Handling.Infrastructure;
+using Insight.TelegramBot.UpdateProcessors;
 using Insight.TelegramBot.Web;
 using Insight.TelegramBot.Web.Hosts;
 using Microsoft.Extensions.Options;
@@ -12,63 +14,45 @@ using Newtonsoft.Json.Serialization;
 using Serilog;
 using Telegram.Bot;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = Host.CreateDefaultBuilder(args);
 
-builder.Host.ConfigureAppConfiguration((ctx, configurationBuilder) =>
+builder.ConfigureAppConfiguration((ctx, configurationBuilder) =>
 {
-    configurationBuilder.AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName.ToLowerInvariant()}.json", false, true);
+    configurationBuilder.AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName.ToLowerInvariant()}.json",
+        false, true);
     configurationBuilder.AddJsonFile("appsettings.protected.json", true, true);
     configurationBuilder.AddEnvironmentVariables();
 });
 
-builder.Host.UseSerilog((ctx, logBuilder) =>
+builder.UseSerilog((ctx, logBuilder) =>
 {
     logBuilder.ReadFrom.Configuration(ctx.Configuration)
         .Enrich.FromLogContext();
 });
 
 // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddHttpClient();
-builder.Services.AddHealthChecks();
-
-builder.Services.AddMvc()
-    .AddUpdateController()
-    .AddNewtonsoftJson(
-        opt => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
-
-builder.Services.AddSingleton<IDateTimeProvider, DefaultDateTimeProvider>();
-
-builder.Services.AddTransient(ctx => new DailyInfoSoapClient(DailyInfoSoapClient.EndpointConfiguration.DailyInfoSoap));
-builder.Services.AddTransient<ICachingCurrencyService, CachingCurrencyService>();
-builder.Services.AddTransient<ICurrencyService, CurrencyService>();
-
-builder.Services.Configure<BotConfiguration>(builder.Configuration.GetSection(nameof(BotConfiguration)));
-
-builder.Services.AddTransient<IBot, BotClient>();
-builder.Services.AddScoped<IUpdateProcessor, UpdateProcessor>();
-builder.Services.AddTransient<ITelegramBotClient, TelegramBotClient>(c =>
-    new TelegramBotClient(c.GetService<IOptions<BotConfiguration>>()?.Value.Token,
-        c.GetService<IHttpClientFactory>().CreateClient()));
-
-builder.Services.AddHostedService(c =>
-    new TelegramBotWebHookHost(c.GetService<ITelegramBotClient>(),
-        c.GetService<IOptions<BotConfiguration>>()?.Value));
-
-builder.Services.AddMemoryCache();
-
-var app = builder.Build();
-
-app.UseRouting();
-app.UseHealthChecks("/healthcheck");
-
-app.UseEndpoints(endpoints =>
+builder.ConfigureServices((ctx, services) =>
 {
-    endpoints.MapControllers();
-    var botConfiguration = new BotConfiguration();
-    builder.Configuration.GetSection(nameof(BotConfiguration)).Bind(botConfiguration);
-    if (botConfiguration.WebHookConfiguration.UseWebHook)
-        endpoints.AddUpdateControllerRoute(botConfiguration.WebHookConfiguration.WebHookPath);
+    services.AddHttpClient();
+    services.AddSingleton<IDateTimeProvider, DefaultDateTimeProvider>();
+    services.AddTransient(_ =>
+        new DailyInfoSoapClient(DailyInfoSoapClient.EndpointConfiguration.DailyInfoSoap));
+    services.AddTransient<ICachingCurrencyService, CachingCurrencyService>();
+    services.AddTransient<ICurrencyService, CurrencyService>();
+
+    services.Configure<BotConfiguration>(ctx.Configuration.GetSection(nameof(BotConfiguration)));
+    services.AddTransient<IBot, BotClient>();
+    services.AddTelegramBotHandling(typeof(BotClient).Assembly);
+
+    services.AddSingleton<ITelegramBotClient, TelegramBotClient>(c =>
+        new TelegramBotClient(c.GetService<IOptions<BotConfiguration>>().Value.Token,
+            new HttpClient()));
+
+    services.AddPollingBotHost();
+
+    services.AddMemoryCache();
 });
 
-app.Run();
+
+var host = builder.Build();
+await host.RunAsync();
