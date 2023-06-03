@@ -16,18 +16,16 @@ docker build -t mycbrbot:latest . -f MyCbrBot.Host/Dockerfile
 Run bot in docker
 =======
 
+Bot uses polling.
+
 ```
 docker run --name mycbrbot \
         -d --restart unless-stopped \
-        -p 8080:80 \
-        -e BotConfiguration__WebHookConfiguration__UseWebHook=true \
-        -e BotConfiguration__WebHookConfiguration__WebHookBaseUrl=$(WebHookBaseUrl) \
-        -e BotConfiguration__WebHookConfiguration__WebHookPath=$(PathForUpdateController) \
+        -e BotConfiguration__WebHookConfiguration__UseWebHook=false \
         -e BotConfiguration__Token=$(MyCbrBotToken) \
         mycbrbot:latest
 ```
 
 Where:
-- WebHookBaseUrl - base url of webhook, e.g. https://mycoolestbot.com
 - PathForUpdateController - path for receive updates from telegram.
 - MyCbrBotToken - token of telegram bot.

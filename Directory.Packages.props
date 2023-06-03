@@ -5,7 +5,7 @@
         <InsightTelegramBotVersion>0.7.0</InsightTelegramBotVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Insight.Cbr" Version="1.0.2" />
+        <PackageVersion Include="Insight.Cbr" Version="1.0.2" />
     </ItemGroup>
     <ItemGroup Label="Insight.TelegramBot">
         <PackageVersion Include="Insight.TelegramBot" Version="$(InsightTelegramBotVersion)"/>
