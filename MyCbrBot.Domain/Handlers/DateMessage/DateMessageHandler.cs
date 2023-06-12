@@ -82,7 +82,10 @@ public sealed class DateMessageHandler : IMatchingUpdateHandler<DateMessageMatch
         {
             sb.Append($"Курсы валют 💲 на {date:dd-MM-yyyy}:\n");
             foreach (var rate in rates)
-                sb.Append($"<b>{rate.Name} ({rate.Code} - {rate.IsoCode})</b>: {rate.Par} - {rate.Rate}\n");
+            {
+                sb.Append(rate.GetString());
+                sb.Append("\n");
+            }
 
             await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
             {
@@ -101,7 +104,7 @@ public sealed class DateMessageHandler : IMatchingUpdateHandler<DateMessageMatch
             if (rate == null)
                 sb.Append($"Курс валюты 💲 по вашему запросу не найден: {args.Last()}");
             else
-                sb.Append($"<b>{rate.Name} ({rate.Code} - {rate.IsoCode})</b>: {rate.Par} - {rate.Rate}");
+                sb.Append(rate.GetString());
 
             await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
             {

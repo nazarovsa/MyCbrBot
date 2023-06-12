@@ -50,7 +50,10 @@ public sealed class TodayMessageHandler : IMatchingUpdateHandler<TodayMessageMat
         {
             sb.Append("Курсы валют 💲 на сегодня:\n");
             foreach (var rate in rates)
-                sb.Append($"<b>{rate.Name} ({rate.Code} - {rate.IsoCode})</b>: {rate.Par} - {rate.Rate}\n");
+            {
+                sb.Append(rate.GetString());
+                sb.Append("\n");
+            }
 
             await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
             {
@@ -69,7 +72,7 @@ public sealed class TodayMessageHandler : IMatchingUpdateHandler<TodayMessageMat
             if (rate == null)
                 sb.Append($"Валюта по вашему запросу не найдена 😔: {args}");
             else
-                sb.Append($"<b>{rate.Name} ({rate.Code} - {rate.IsoCode})</b>: {rate.Par} - {rate.Rate}");
+                sb.Append(rate.GetString());
 
             await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
             {
