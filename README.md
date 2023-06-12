@@ -21,9 +21,9 @@ Bot uses polling.
 ```
 docker run --name mycbrbot \
         -d --restart unless-stopped \
-        -e BotConfiguration__Token=$(MyCbrBotToken) \
+        -e BotConfiguration__Token=$MyCbrBotToken \
         mycbrbot:latest
 ```
 
 Where:
-- MyCbrBotToken - token of telegram bot.
+- $MyCbrBotToken - env variable with token of telegram bot.
