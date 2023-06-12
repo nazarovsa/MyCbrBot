@@ -3,7 +3,7 @@ using Insight.Cbr;
 using Insight.TelegramBot;
 using Insight.TelegramBot.Configurations;
 using Insight.TelegramBot.Handling.Infrastructure;
-using Insight.TelegramBot.Web;
+using Insight.TelegramBot.Hosting;
 using Microsoft.Extensions.Options;
 using MyCbrBot.Core.Dates;
 using MyCbrBot.Domain.Services;

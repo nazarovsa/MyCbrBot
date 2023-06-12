@@ -7,20 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Insight.TelegramBot.Web"/>
-        <PackageReference Include="Insight.TelegramBot.Handling"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory"/>
-        <PackageReference Include="Serilog"/>
-        <PackageReference Include="Serilog.AspNetCore"/>
+        <PackageReference Include="Insight.TelegramBot.Hosting" />
+        <PackageReference Include="Insight.TelegramBot.Handling" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
+        <PackageReference Include="Serilog" />
+        <PackageReference Include="Serilog.AspNetCore" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MyCbrBot.Core\MyCbrBot.Core.csproj"/>
-        <ProjectReference Include="..\MyCbrBot.Domain\MyCbrBot.Domain.csproj"/>
+        <ProjectReference Include="..\MyCbrBot.Core\MyCbrBot.Core.csproj" />
+        <ProjectReference Include="..\MyCbrBot.Domain\MyCbrBot.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <_ContentIncludedByDefault Remove="Resources\messages.ru-ru.json"/>
+        <_ContentIncludedByDefault Remove="Resources\messages.ru-ru.json" />
     </ItemGroup>
 
 </Project>
