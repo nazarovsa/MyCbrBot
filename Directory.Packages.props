@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <MicrosoftVersion>7.0.0</MicrosoftVersion>
-        <InsightTelegramBotVersion>0.13.1</InsightTelegramBotVersion>
+        <InsightTelegramBotVersion>0.13.2</InsightTelegramBotVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="Insight.Cbr" Version="1.0.2" />
