@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Insight.TelegramBot.Hosting" />
         <PackageReference Include="Insight.TelegramBot.Handling" />
+        <PackageReference Include="Insight.TelegramBot.Hosting.DependencyInjection" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
         <PackageReference Include="Serilog" />
         <PackageReference Include="Serilog.AspNetCore" />

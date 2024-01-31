@@ -1,15 +1,12 @@
 using Generated;
 using Insight.Cbr;
-using Insight.TelegramBot;
-using Insight.TelegramBot.Configurations;
 using Insight.TelegramBot.Handling.Infrastructure;
-using Insight.TelegramBot.Hosting;
-using Microsoft.Extensions.Options;
+using Insight.TelegramBot.Hosting.DependencyInjection.Infrastructure;
+using Insight.TelegramBot.Hosting.Polling.ExceptionHandlers;
 using MyCbrBot.Core.Dates;
 using MyCbrBot.Domain.Services;
 using MyCbrBot.Domain.TelegramBot;
 using Serilog;
-using Telegram.Bot;
 
 var builder = Host.CreateDefaultBuilder(args);
 
@@ -30,26 +27,23 @@ builder.UseSerilog((ctx, logBuilder) =>
 // Add services to the container.
 builder.ConfigureServices((ctx, services) =>
 {
-    services.AddHttpClient();
     services.AddSingleton<IDateTimeProvider, DefaultDateTimeProvider>();
     services.AddTransient(_ =>
         new DailyInfoSoapClient(DailyInfoSoapClient.EndpointConfiguration.DailyInfoSoap));
     services.AddTransient<ICachingCurrencyService, CachingCurrencyService>();
     services.AddTransient<ICurrencyService, CurrencyService>();
 
-    services.Configure<BotConfiguration>(ctx.Configuration.GetSection(nameof(BotConfiguration)));
-    services.AddTransient<IBot, BotClient>();
-    services.AddTelegramBotHandling(typeof(BotClient).Assembly);
-
-    services.AddSingleton<ITelegramBotClient, TelegramBotClient>(c =>
-        new TelegramBotClient(c.GetService<IOptions<BotConfiguration>>().Value.Token,
-            new HttpClient()));
-
-    services.AddPollingBotHost();
-
     services.AddMemoryCache();
-});
 
+    services.AddTelegramBot(bot =>
+        bot.WithBot<BotClient>(ServiceLifetime.Transient)
+            .WithTelegramBotClient(client => client
+                .WithLifetime(ServiceLifetime.Singleton)
+                .WithMicrosoftHttpClientFactory())
+            .WithOptions(opt => opt.FromConfiguration(ctx.Configuration))
+            .WithPolling(polling => polling.WithExceptionHandler<LoggingPollingExceptionHandler>()));
+    services.AddTelegramBotHandling(typeof(BotClient).Assembly);
+});
 
 var host = builder.Build();
 await host.RunAsync();

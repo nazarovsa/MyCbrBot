@@ -2,14 +2,14 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <MicrosoftVersion>7.0.0</MicrosoftVersion>
-        <InsightTelegramBotVersion>0.13.2</InsightTelegramBotVersion>
+        <InsightTelegramBotVersion>0.16.0</InsightTelegramBotVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="Insight.Cbr" Version="1.0.2" />
     </ItemGroup>
     <ItemGroup Label="Insight.TelegramBot">
         <PackageVersion Include="Insight.TelegramBot" Version="$(InsightTelegramBotVersion)"/>
-        <PackageVersion Include="Insight.TelegramBot.Hosting" Version="$(InsightTelegramBotVersion)"/>
+        <PackageVersion Include="Insight.TelegramBot.Hosting.DependencyInjection" Version="$(InsightTelegramBotVersion)"/>
         <PackageVersion Include="Insight.TelegramBot.Handling" Version="$(InsightTelegramBotVersion)"/>
     </ItemGroup>
     <ItemGroup Label="Serilog">
