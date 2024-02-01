@@ -21,7 +21,7 @@ Bot uses polling.
 ```
 docker run --name mycbrbot \
         -d --restart unless-stopped \
-        -e BotConfiguration__Token=$MyCbrBotToken \
+        -e TelegramBotOptions__Token=$MyCbrBotToken \
         mycbrbot:latest
 ```
 
