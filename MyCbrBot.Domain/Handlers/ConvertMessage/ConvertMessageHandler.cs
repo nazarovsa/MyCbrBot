@@ -89,6 +89,37 @@ public sealed class ConvertMessageHandler : IMatchingUpdateHandler<ConvertMessag
             }, cancellationToken);
             return;
         }
+        
+        if (from.Equals("rub", StringComparison.OrdinalIgnoreCase) ||
+            from.Equals("840", StringComparison.OrdinalIgnoreCase))
+        {
+            if (string.IsNullOrWhiteSpace(to))
+            {
+                await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
+                {
+                    Text = "При конвертации рублей должна быть указана целевая валюта."
+                }, cancellationToken);
+                return;
+            }
+
+            var targetRate = rates.FirstOrDefaultByKey(to);
+            if (targetRate == null)
+            {
+                await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
+                {
+                    Text = to.CurrencyNotFound(),
+                    ParseMode = ParseMode.Html
+                }, cancellationToken);
+                return;
+            }
+            
+            var fromRubResult = sum / targetRate.Rate * Convert.ToInt32(targetRate.Par);
+            await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
+            {
+                Text = $"{sum} ₽ = {fromRubResult:F2} {targetRate.Code}",
+            }, cancellationToken);
+            return;
+        }
 
         var fromRate = rates.FirstOrDefaultByKey(from);
         if (fromRate == null)
@@ -130,7 +161,7 @@ public sealed class ConvertMessageHandler : IMatchingUpdateHandler<ConvertMessag
 
         await _bot.SendMessageAsync(new TextMessage(update.Message.From!.Id)
         {
-            Text = $"{sum} {fromRate.Name} = {result:F2} {toRate.Name}",
+            Text = $"{sum} {fromRate.Code} = {result:F2} {toRate.Code}",
             ParseMode = ParseMode.Html
         }, cancellationToken);
     }
