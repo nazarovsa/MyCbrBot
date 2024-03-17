@@ -36,14 +36,20 @@ public sealed class ConvertMessageHandler : IMatchingUpdateHandler<ConvertMessag
 
         if (args.Length < 2 || args.Length > 4)
         {
-            // TODO: Send message
-            throw new Exception("Неверное количество аргументов");
+            await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
+            {
+                Text = "Передано неверное количество аргументов. Для помощи отправьте команду /help."
+            }, cancellationToken);
+            return;
         }
 
         if (!decimal.TryParse(args[0], out var sum))
         {
-            // TODO: Send message
-            throw new Exception("Неверный формат суммы");
+            await _bot.SendMessageAsync(new TextMessage(update.Message.Chat)
+            {
+                Text = "Не удалось извлечь сумму. Для помощи отправьте команду /help."
+            }, cancellationToken);
+            return;
         }
 
         var from = args[1];
