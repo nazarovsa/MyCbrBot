@@ -3,6 +3,7 @@ using Insight.TelegramBot;
 using Insight.TelegramBot.Handling.Handlers;
 using Insight.TelegramBot.Models;
 using MyCbrBot.Core.Dates;
+using MyCbrBot.Domain.Extensions;
 using MyCbrBot.Domain.Services;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -64,10 +65,7 @@ public sealed class TodayMessageHandler : IMatchingUpdateHandler<TodayMessageMat
         else
         {
             sb.Append("Курс валюты 💲 на сегодня:\n");
-            var rate = rates.FirstOrDefault(x =>
-                args.Equals(x.IsoCode, StringComparison.InvariantCultureIgnoreCase) ||
-                args.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase) ||
-                args.Equals(x.Code, StringComparison.InvariantCultureIgnoreCase));
+            var rate = rates.FirstOrDefaultByKey(args);
 
             if (rate == null)
                 sb.Append($"Валюта по вашему запросу не найдена 😔: {args}");
