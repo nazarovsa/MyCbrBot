@@ -4,6 +4,7 @@ using Insight.TelegramBot;
 using Insight.TelegramBot.Handling.Handlers;
 using Insight.TelegramBot.Models;
 using MyCbrBot.Core.Dates;
+using MyCbrBot.Domain.Extensions;
 using MyCbrBot.Domain.Services;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -96,13 +97,10 @@ public sealed class DateMessageHandler : IMatchingUpdateHandler<DateMessageMatch
         else if (args.Length == 2)
         {
             sb.Append($"Курс валюты 💲 на {date:dd-MM-yyyy}:\n");
-            var rate = rates.FirstOrDefault(x =>
-                args.Last().Equals(x.IsoCode, StringComparison.InvariantCultureIgnoreCase) ||
-                args.Last().Equals(x.Name, StringComparison.InvariantCultureIgnoreCase) ||
-                args.Last().Equals(x.Code, StringComparison.InvariantCultureIgnoreCase));
+            var rate = rates.FirstOrDefaultByKey(args.Last());
 
             if (rate == null)
-                sb.Append($"Курс валюты 💲 по вашему запросу не найден: {args.Last()}");
+                sb.Append(args.Last().CurrencyNotFound());
             else
                 sb.Append(rate.GetString());
 
